@@ -26,6 +26,7 @@
       "#includes/*": ["./src/includes/*"],
       "#store": ["./src/store"],
       "#components/*": ["./src/components/*"],
+      "#config": ["./src/config"],
     }
   },
   "include": ["src"],
