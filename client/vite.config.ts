@@ -8,11 +8,12 @@ export default defineConfig({
     react(),
   ],
   resolve: {
-    alias: [
-      {
-        find: '#global',
-        replacement: path.resolve(__dirname, '../global'),
-      },
-    ],
+    alias: {
+      '#global': path.resolve(__dirname, '../global'),
+      '#assets': path.resolve(__dirname, './src/assets'),
+      '#includes': path.resolve(__dirname, './src/includes'),
+      '#store': path.resolve(__dirname, './src/store'),
+      '#components': path.resolve(__dirname, './src/components'),
+    },
   },
 });

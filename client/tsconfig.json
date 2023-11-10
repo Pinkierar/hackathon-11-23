@@ -22,6 +22,10 @@
 
     "paths": {
       "#global": ["../global"],
+      "#assets/*": ["./src/assets/*"],
+      "#includes/*": ["./src/includes/*"],
+      "#store": ["./src/store"],
+      "#components/*": ["./src/components/*"],
     }
   },
   "include": ["src"],
