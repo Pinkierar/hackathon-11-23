@@ -31,7 +31,7 @@ export const Header = observer<HeaderProps>(() => {
         </div>
         <div className={s.about}>
           <AiOutlineInfoCircle />
-          <a href="#">Подробнее</a>
+          <Link to="/about">Подробнее</Link>
         </div>
       </article>
     </header>

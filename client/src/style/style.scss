@@ -1,5 +1,6 @@
 @import './fonts/fonts';
 @import './abstracts/variables';
+@import './abstracts/mixins';
 
 *,
 *::after,
@@ -10,21 +11,21 @@
 }
 
 html {
-  //   @include respond(sm) {
-  //     // font-size:
-  //   }
+  @include respond(sm) {
+    // font-size:
+  }
 
-  //   @include respond(md) {
-  //     // font-size:
-  //   }
+  @include respond(md) {
+    // font-size:
+  }
 
-  //   @include respond(lg) {
-  //     // font-size:
-  //   }
+  @include respond(lg) {
+    // font-size:
+  }
 
-  //   @include respond(xl) {
-  //     // font-size:
-  //   }
+  @include respond(xl) {
+    // font-size:
+  }
 
   font-family: Gilroy, sans-serif;
   font-size: 62.5%;
