@@ -9,6 +9,8 @@ import { BsJoystick } from 'react-icons/bs';
 import { IconType } from 'react-icons';
 import { JSX } from 'react';
 
+import s from './rules.module.scss';
+
 const listRules: {
   icon: IconType;
   desc: JSX.Element;
@@ -35,9 +37,9 @@ export const Rules = () => {
         сложный путь, представленный в виде лабиринта, между ребенком,
         оставшимся без родителями и его будущими приемными родителями!
       </p>
-      <ul>
+      <ul className={s.list}>
         {listRules.map((item, i) => (
-          <li key={i}>
+          <li className={s.list__item} key={i}>
             <span>{<item.icon />}</span>
             <p>{item.desc}</p>
           </li>
