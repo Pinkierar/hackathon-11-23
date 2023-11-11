@@ -1,0 +1,16 @@
+@use '@style' as *;
+
+footer {
+  padding-block: 1.5rem;
+
+  color: $font-color;
+  text-align: center;
+
+  background: #eeaeca;
+  background: radial-gradient(circle, $main-color 0%, $second-color 100%);
+}
+
+.text {
+  font-size: 1.5rem;
+  font-weight: 200;
+}
