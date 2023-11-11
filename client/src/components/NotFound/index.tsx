@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react-lite';
-import { Main } from '#components/Main';
+import s from './notFound.module.scss';
 
 export const NotFound = observer(() => {
   return (
-    <Main>
-      <h2>Страница не найдена</h2>
-    </Main>
+    <section>
+      <img className={s.img} src={'assets/404/404.jpg'}></img>
+    </section>
   );
 });

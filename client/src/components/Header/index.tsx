@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { HTMLAttributes } from 'react';
 import { observer } from 'mobx-react-lite';
 import {
@@ -20,17 +21,17 @@ export const Header = observer<HeaderProps>(() => {
     <header>
       <h2 className={s.title}>
         <AiOutlineHeart />
-        <a href="#">Лабиринт</a>
+        <Link to="/">Лабиринт</Link>
       </h2>
 
       <article className={s.right}>
         <div className={s.rules}>
           <AiOutlineRead />
-          <a href="#">Правила</a>
+          <Link to="/rules">Правила</Link>
         </div>
         <div className={s.about}>
           <AiOutlineInfoCircle />
-          <a href="#">Подробнее</a>
+          <Link to="/about">Подробнее</Link>
         </div>
       </article>
     </header>
