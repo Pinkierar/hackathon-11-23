@@ -35,4 +35,8 @@ export class Circle extends Shape {
 
     p.circle(0, 0, this.radius + this.radius);
   }
+
+  public drawVertices(): void {
+    this.draw();
+  }
 }

@@ -1,6 +1,6 @@
-import {Vector} from 'p5';
-import {Shape} from './Shape';
-import {BoundingBox} from '#includes/graphics';
+import { Vector } from 'p5';
+import { Shape } from './Shape';
+import { BoundingBox } from '#includes/graphics';
 
 export class Line extends Shape {
   protected readonly from: Vector = new Vector();
@@ -34,23 +34,30 @@ export class Line extends Shape {
   }
 
   public draw(): void {
-    const {p, from, to} = this;
+    const { p } = this;
 
-    p.line(from.x, from.y, to.x, to.y);
+    p.beginShape(p.LINES);
+    this.drawVertices();
+    p.endShape();
+  }
+
+  public drawVertices(offset?: Vector): void {
+    const { p } = this;
+
+    offset = offset ?? p.createVector();
+    const from = this.from.copy().add(offset);
+    const to = this.to.copy().add(offset);
+
+    p.vertex(from.x, from.y);
+    p.vertex(to.x, to.y);
   }
 
   public toBoundingBox(): BoundingBox {
-    const {from, to} = this;
+    const { from, to } = this;
 
     return new BoundingBox(
-      new Vector(
-        Math.min(from.x, to.x),
-        Math.min(from.y, to.y),
-      ),
-      new Vector(
-        Math.max(from.x, to.x),
-        Math.max(from.y, to.y),
-      ),
+      new Vector(Math.min(from.x, to.x), Math.min(from.y, to.y)),
+      new Vector(Math.max(from.x, to.x), Math.max(from.y, to.y)),
     );
   }
 }

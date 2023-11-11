@@ -1,6 +1,6 @@
-import {Vector} from 'p5';
-import {Shape} from './Shape';
-import {BoundingBox} from '#includes/graphics';
+import { Vector } from 'p5';
+import { Shape } from './Shape';
+import { BoundingBox } from '#includes/graphics';
 
 export class Polygon extends Shape {
   protected vertices: Vector[];
@@ -56,12 +56,12 @@ export class Polygon extends Shape {
     let isInside = false;
 
     for (let i = 0, j = vertices.length - 1; i < vertices.length; j = i++) {
-      const {x: xi, y: yi} = vertices[i];
-      const {x: xj, y: yj} = vertices[j];
+      const { x: xi, y: yi } = vertices[i];
+      const { x: xj, y: yj } = vertices[j];
 
       const intersect =
-        ((yi > point.y) !== (yj > point.y)) &&
-        (point.x < (xj - xi) * (point.y - yi) / (yj - yi) + xi);
+        yi > point.y !== yj > point.y &&
+        point.x < ((xj - xi) * (point.y - yi)) / (yj - yi) + xi;
 
       if (intersect) {
         isInside = !isInside;
@@ -72,12 +72,21 @@ export class Polygon extends Shape {
   }
 
   public draw(): void {
-    const {p, vertices} = this;
+    const { p } = this;
 
     p.beginShape(p.TESS);
-
-    vertices.forEach(({x, y}) => p.vertex(x, y));
-
+    this.drawVertices();
     p.endShape(p.CLOSE);
+  }
+
+  public drawVertices(offset?: Vector): void {
+    const { p, vertices } = this;
+
+    offset = offset ?? p.createVector();
+
+    for (let i = 0; i < vertices.length; i++) {
+      const { x, y } = vertices[i];
+      p.vertex(x + offset.x, y + offset.y);
+    }
   }
 }

@@ -3,7 +3,7 @@ import {Shape} from './Shape';
 import {BoundingBox} from '#includes/graphics';
 
 export class Rectangle extends Shape {
-  private readonly size: Vector;
+  protected readonly size: Vector;
 
   public constructor(size: Vector) {
     super();
@@ -15,6 +15,10 @@ export class Rectangle extends Shape {
 
   public setSize(size: Vector): void {
     this.size.set(size);
+  }
+
+  public getSize(): Vector {
+    return this.size;
   }
 
   public isInside(point: Vector): boolean {
@@ -32,5 +36,9 @@ export class Rectangle extends Shape {
     const from = size.copy().div(-2);
 
     p.rect(from.x, from.y, size.x, size.y);
+  }
+
+  public drawVertices(): void {
+    this.draw();
   }
 }
