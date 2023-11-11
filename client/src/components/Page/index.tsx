@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { Header } from '#components/Header';
+import { About } from '#components/About';
 import { Footer } from '#components/Footer';
 import { Rules } from '#components/Rules';
 import { NotFound } from '#components/NotFound';
@@ -16,6 +17,7 @@ export const Page = observer(() => {
       <Routes>
         <Route path={'/'} element={<Home />} />
         <Route path={'/rules'} element={<Rules />} />
+        <Route path={'/about'} element={<About />} />
         <Route path={'*'} element={<NotFound />} />
       </Routes>
       <Notifications />

@@ -1,0 +1,22 @@
+@use '@style' as *;
+@use '@style' as *;
+
+.about {
+  flex-grow: 1;
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 10rem;
+}
+
+.title {
+  font-size: 3.6rem;
+  font-weight: 600;
+  color: $font-color;
+}
+
+.description {
+  margin-top: 3.2rem;
+  font-size: 2.4rem;
+  font-weight: 400;
+  color: $font-color;
+}
