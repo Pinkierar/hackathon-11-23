@@ -21,11 +21,11 @@ export const Notifications = observer<NotificationsProps>(props => {
     <div {...otherProps}>
       {notifications.items.filter(item => item.displayed).map(item => (
         item.type === NotificationType.info ? (
-          <div>
+          <div key={item.id}>
             {item.content}
           </div>
         ) : item.type === NotificationType.error ? (
-          <div>
+          <div key={item.id}>
             Error: {item.content}
           </div>
         ) : checkNever(item.type)
