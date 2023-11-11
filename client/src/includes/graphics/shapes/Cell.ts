@@ -1,26 +1,25 @@
-import { Rectangle } from './Rectangle';
 import { Vector } from 'p5';
-import { Line } from '#includes/graphics';
-import { isTruthy } from '#includes/isTruthy.ts';
+import { LineShape, RectangleShape } from '#includes/graphics';
+import { isTruthy } from '#includes/isTruthy';
 
-type WallsConfig = Partial<{
+export type CellConfig = Partial<{
   top: boolean;
   right: boolean;
   bottom: boolean;
   left: boolean;
 }>;
 
-export class Walls extends Rectangle {
-  private lines: ReadonlyArray<Line> = [];
-  private config!: Readonly<WallsConfig>;
+export class CellShape extends RectangleShape {
+  private lines: ReadonlyArray<LineShape> = [];
+  private config!: Readonly<CellConfig>;
 
-  public constructor(size: Vector, config: WallsConfig) {
+  public constructor(size: Vector, config: CellConfig) {
     super(size);
 
     this.setConfig(config);
   }
 
-  public setConfig(config: WallsConfig): void {
+  public setConfig(config: CellConfig): void {
     const { p, size } = this;
 
     this.config = config;
@@ -35,14 +34,14 @@ export class Walls extends Rectangle {
       // config.bottom && new Line(topRight, bottomRight),
       // config.right && new Line(bottomRight, bottomLeft),
       // config.top && new Line(bottomLeft, topLeft),
-      config.top && new Line(topLeft, topRight),
-      config.right && new Line(topRight, bottomRight),
-      config.bottom && new Line(bottomRight, bottomLeft),
-      config.left && new Line(bottomLeft, topLeft),
+      config.top && new LineShape(topLeft, topRight),
+      config.right && new LineShape(topRight, bottomRight),
+      config.bottom && new LineShape(bottomRight, bottomLeft),
+      config.left && new LineShape(bottomLeft, topLeft),
     ].filter(isTruthy);
   }
 
-  public getConfig(): Readonly<WallsConfig> {
+  public getConfig(): Readonly<CellConfig> {
     return this.config;
   }
 

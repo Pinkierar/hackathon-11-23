@@ -1,8 +1,8 @@
-import {Vector} from 'p5';
-import {Shape} from './Shape';
-import {BoundingBox} from '#includes/graphics';
+import { Vector } from 'p5';
+import { Shape } from './Shape';
+import { BoundingBox } from '#includes/graphics';
 
-export class Rectangle extends Shape {
+export class RectangleShape extends Shape {
   protected readonly size: Vector;
 
   public constructor(size: Vector) {
@@ -31,7 +31,7 @@ export class Rectangle extends Shape {
   }
 
   public draw(): void {
-    const {p, size} = this;
+    const { p, size } = this;
 
     const from = size.copy().div(-2);
 

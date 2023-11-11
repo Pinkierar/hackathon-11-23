@@ -2,7 +2,7 @@ import { Vector } from 'p5';
 import { Shape } from './Shape';
 import { BoundingBox } from '#includes/graphics';
 
-export class Polygon extends Shape {
+export class PolygonShape extends Shape {
   protected vertices: Vector[];
 
   public constructor(vertices: Vector[]) {

@@ -1,8 +1,8 @@
-import {Shape} from './Shape';
-import {Vector} from 'p5';
-import {BoundingBox} from '#includes/graphics';
+import { Shape } from './Shape';
+import { Vector } from 'p5';
+import { BoundingBox } from '#includes/graphics';
 
-export class Circle extends Shape {
+export class CircleShape extends Shape {
   private radius: number;
 
   public constructor(radius: number) {

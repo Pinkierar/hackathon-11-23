@@ -1,12 +1,12 @@
 import { Vector } from 'p5';
 
-type Cell = [number, number, number, number];
+type Cell = [boolean, boolean, boolean, boolean];
 
 export class Labyrinth {
-  public readonly maze: Cell[][];
+  public readonly rows: Cell[][];
 
   public constructor(size: Vector) {
-    this.maze = this.newMaze(size);
+    this.rows = this.newMaze(size);
   }
 
   private newMaze({ x, y }: Vector): Cell[][] {
@@ -17,7 +17,7 @@ export class Labyrinth {
       cells[i] = [];
       unvis[i] = [];
       for (let j = 0; j < x; j++) {
-        cells[i][j] = [0, 0, 0, 0];
+        cells[i][j] = [true, true, true, true];
         unvis[i][j] = true;
       }
     }
@@ -31,13 +31,13 @@ export class Labyrinth {
 
     let visited = 1;
     while (visited < totalCells) {
-      const pot: Cell[] = [
+      const pot: [number, number, number, number][] = [
         [currentCell[0] - 1, currentCell[1], 0, 2],
         [currentCell[0], currentCell[1] + 1, 1, 3],
         [currentCell[0] + 1, currentCell[1], 2, 0],
         [currentCell[0], currentCell[1] - 1, 3, 1],
       ];
-      const neighbors: Cell[] = [];
+      const neighbors: [number, number, number, number][] = [];
 
       for (let l = 0; l < 4; l++) {
         if (
@@ -54,8 +54,8 @@ export class Labyrinth {
       if (neighbors.length) {
         const next = neighbors[Math.floor(Math.random() * neighbors.length)];
 
-        cells[currentCell[0]][currentCell[1]][next[2]] = 1;
-        cells[next[0]][next[1]][next[3]] = 1;
+        cells[currentCell[0]][currentCell[1]][next[2]] = false;
+        cells[next[0]][next[1]][next[3]] = false;
 
         unvis[next[0]][next[1]] = false;
         visited++;

@@ -2,7 +2,7 @@ import { Vector } from 'p5';
 import { Shape } from './Shape';
 import { BoundingBox } from '#includes/graphics';
 
-export class Line extends Shape {
+export class LineShape extends Shape {
   protected readonly from: Vector = new Vector();
   protected readonly to: Vector = new Vector();
 
