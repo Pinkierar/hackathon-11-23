@@ -23,7 +23,7 @@ export const Page = observer<PageProps>(() => {
       <Routes>
         <Route path={'/'} element={<></>} />
         <Route path={'/rules'} element={<Rules />} />
-        <Route path={'/about'} element={<NotFound />} />
+        <Route path={'*'} element={<NotFound />} />
       </Routes>
       <Notifications />
       <Footer />
