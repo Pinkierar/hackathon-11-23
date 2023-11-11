@@ -5,7 +5,7 @@ import P5, { Vector } from 'p5';
 import style from './style.module.scss';
 import { cl } from '#includes/cl';
 
-type Sketch = {
+export type Sketch = {
   setup?: () => void;
   draw?: () => void;
 };
