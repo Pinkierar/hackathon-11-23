@@ -1,5 +1,5 @@
-import {Vector} from 'p5';
-import {Drawable, Shape, Style} from '#includes/graphics';
+import { Vector } from 'p5';
+import { Drawable, Shape, Style } from '#includes/graphics';
 
 export class Figure extends Drawable {
   private shape: Shape;
@@ -12,7 +12,7 @@ export class Figure extends Drawable {
     super();
 
     this.style = style ?? {};
-    this.defaultStyle = {...this.style};
+    this.defaultStyle = { ...this.style };
 
     this.position = new Vector();
     this.shape = shape;
@@ -30,9 +30,9 @@ export class Figure extends Drawable {
     return this.style;
   }
 
-  public setPosition(position: Vector): void
-  public setPosition(x: number, y: number): void
-  public setPosition(arg1: Vector | number, y?: number): void
+  public setPosition(position: Vector): void;
+  public setPosition(x: number, y: number): void;
+  public setPosition(arg1: Vector | number, y?: number): void;
   public setPosition(arg1: Vector | number, y?: number): void {
     if (arg1 instanceof Vector) return void this.position.set(arg1);
     if (y !== undefined) return void this.position.set(arg1, y);
@@ -42,8 +42,18 @@ export class Figure extends Drawable {
     return this.position;
   }
 
+  public isInside(point: Vector): boolean {
+    const local = this.toLocal(point);
+
+    return this.shape.isInside(local);
+  }
+
+  public toLocal(point: Vector): Vector {
+    return point.copy().sub(this.position);
+  }
+
   public draw(): void {
-    const {p, shape, style} = this;
+    const { p, shape, style } = this;
 
     if (!style.fill && !style.stroke) return;
 
@@ -59,13 +69,9 @@ export class Figure extends Drawable {
     p.pop();
   }
 
-  public isInside(point: Vector): boolean {
-    const local = this.toLocal(point);
+  public drawVertices(offset?: Vector): void {
+    const { shape } = this;
 
-    return this.shape.isInside(local);
-  }
-
-  public toLocal(point: Vector): Vector {
-    return point.copy().sub(this.position);
+    shape.drawVertices(offset);
   }
 }

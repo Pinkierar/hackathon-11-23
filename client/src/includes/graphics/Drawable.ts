@@ -1,4 +1,5 @@
 import {Contextual} from '#includes/graphics';
+import {Vector} from 'p5';
 
 export abstract class Drawable extends Contextual {
   // private static readonly drawables: Drawable[] = [];
@@ -17,5 +18,6 @@ export abstract class Drawable extends Contextual {
   //   Drawable.drawables.push(this);
   // }
 
+  public abstract drawVertices(offset?: Vector): void;
   public abstract draw(): void;
 }
