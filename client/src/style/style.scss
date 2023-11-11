@@ -1,0 +1,49 @@
+@import './fonts/fonts';
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  //   @include respond(sm) {
+  //     // font-size:
+  //   }
+
+  //   @include respond(md) {
+  //     // font-size:
+  //   }
+
+  //   @include respond(lg) {
+  //     // font-size:
+  //   }
+
+  //   @include respond(xl) {
+  //     // font-size:
+  //   }
+
+  font-family: Gilroy, sans-serif;
+  font-size: 62.5%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+button {
+  border: none;
+  outline: none;
+}
+
+ol,
+ul {
+  list-style: none;
+}
