@@ -16,7 +16,7 @@ export const Page = observer(() => {
       <Routes>
         <Route path={'/'} element={<Home />} />
         <Route path={'/rules'} element={<Rules />} />
-        <Route path={'/about'} element={<NotFound />} />
+        <Route path={'*'} element={<NotFound />} />
       </Routes>
       <Notifications />
       <Footer />
