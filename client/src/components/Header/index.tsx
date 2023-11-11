@@ -15,7 +15,7 @@ type HeaderPropsMin = {
 type HeaderProps = Omit<HTMLAttributes<HTMLElement>, keyof HeaderPropsMin> &
   HeaderPropsMin;
 
-const Header = observer<HeaderProps>(() => {
+export const Header = observer<HeaderProps>(() => {
   return (
     <header>
       <h2 className={s.title}>
@@ -23,7 +23,7 @@ const Header = observer<HeaderProps>(() => {
         <a href="#">Лабиринт</a>
       </h2>
 
-      <div className={s.right}>
+      <article className={s.right}>
         <div className={s.rules}>
           <AiOutlineRead />
           <a href="#">Правила</a>
@@ -32,9 +32,7 @@ const Header = observer<HeaderProps>(() => {
           <AiOutlineInfoCircle />
           <a href="#">Подробнее</a>
         </div>
-      </div>
+      </article>
     </header>
   );
 });
-
-export default Header;

@@ -6,6 +6,8 @@ import { Notifications } from '#components/Notifications';
 import { Route, Routes } from 'react-router-dom';
 import { HTMLAttributes } from 'react';
 
+import s from './page.module.scss';
+
 type PagePropsMin = {
   children?: never;
 };
@@ -15,7 +17,7 @@ type PageProps = Omit<HTMLAttributes<HTMLElement>, keyof PagePropsMin> &
 
 export const Page = observer<PageProps>(() => {
   return (
-    <div>
+    <div className={s.content}>
       <Header />
       <Routes>
         <Route path={'/'} element={<></>} />
