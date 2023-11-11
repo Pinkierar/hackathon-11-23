@@ -1,20 +1,24 @@
 import {HTMLAttributes, useEffect, useRef, useState} from 'react';
 import {observer} from 'mobx-react-lite';
 import {Contextual} from '#includes/graphics';
-import P5 from 'p5';
+import P5, {Vector} from 'p5';
 import style from './style.module.scss';
+
+type Sketch = {
+  setup?: () => void,
+  draw?: () => void,
+};
 
 type P5CanvasPropsMin = {
   children?: never,
-  sketch?: (p: P5Type) => {
-    setup?: () => void,
-    draw?: () => void,
-  },
+  sketch?: (p: P5Type) => Sketch,
 };
 
 type P5CanvasProps =
   Omit<HTMLAttributes<HTMLElement>, keyof P5CanvasPropsMin>
   & P5CanvasPropsMin;
+
+const size: Vector = new Vector(1, 1);
 
 export const P5Canvas = observer<P5CanvasProps>(props => {
   const {
@@ -25,36 +29,33 @@ export const P5Canvas = observer<P5CanvasProps>(props => {
 
   const [p, setP] = useState<P5Type | null>(null);
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!canvasRef.current) return;
-    const canvas = canvasRef.current;
+    if (!containerRef.current) return;
+    const container = containerRef.current
 
-    new P5((p: P5Type) => {
+    const p5 = new P5((p: P5Type) => {
       const {draw, setup} = sketch
         ? sketch(p)
         : ({} as { draw: undefined, setup: undefined });
 
       p.setup = () => {
-        p.createCanvas(1, 1, 'p2d', canvas);
+        p.createCanvas(size.x, size.y, 'p2d');
         setup && setup();
       };
       p.draw = () => draw && draw();
 
+      Contextual.init(p);
       setP(p);
-    });
+    }, container);
 
     return () => {
       setP(null);
+      Contextual.clear();
+      p5.remove();
     };
-  }, [canvasRef.current, sketch]);
-
-  useEffect(() => {
-    if (p === null) Contextual.clear();
-    else Contextual.init(p);
-  }, [p]);
+  }, [containerRef.current, sketch]);
 
   useEffect(() => {
     const resizeListener = () => {
@@ -65,13 +66,12 @@ export const P5Canvas = observer<P5CanvasProps>(props => {
       const {width, height} = container.getBoundingClientRect();
       const zoom = window.devicePixelRatio;
 
-      const size = p.createVector(width, height).mult(zoom);
-
+      size.set(width, height).mult(zoom);
       p.resizeCanvas(size.x, size.y);
     };
 
-    resizeListener();
     window.addEventListener('resize', resizeListener);
+    resizeListener();
 
     return () => {
       window.removeEventListener('resize', resizeListener);
@@ -79,8 +79,6 @@ export const P5Canvas = observer<P5CanvasProps>(props => {
   }, [p, containerRef]);
 
   return (
-    <div className={style.container} {...otherProps} ref={containerRef}>
-      <canvas className={style.canvas} ref={canvasRef}/>
-    </div>
+    <div className={style.container} {...otherProps} ref={containerRef}/>
   );
 });
