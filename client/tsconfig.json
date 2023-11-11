@@ -27,6 +27,7 @@
       "#store": ["./src/store"],
       "#components/*": ["./src/components/*"],
       "#config": ["./src/config"],
+      "#hooks": ["./src/hooks"],
     }
   },
   "include": ["src"],
