@@ -1,4 +1,4 @@
-import {action, computed, makeObservable, observable} from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 
 class Loader {
   private _loaders: Set<string> = new Set(['main-loading']);

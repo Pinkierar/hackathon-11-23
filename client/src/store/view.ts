@@ -1,4 +1,4 @@
-import {action, computed, makeObservable, observable} from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 
 class View {
   private _grabbing: boolean = false;

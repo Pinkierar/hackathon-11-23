@@ -1,4 +1,4 @@
-import {action, computed, makeObservable, observable} from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 
 const NOTIFICATION_LIFE_TIME = 5000;
 
@@ -8,10 +8,10 @@ export enum NotificationType {
 }
 
 export type NotificationItem = {
-  id: number,
-  content: string,
-  type: NotificationType,
-  displayed: boolean,
+  id: number;
+  content: string;
+  type: NotificationType;
+  displayed: boolean;
 };
 
 class Notifications {
@@ -76,7 +76,7 @@ class Notifications {
   }
 
   private indexById(id: NotificationItem['id']): number {
-    return this._items.findIndex(item => item.id === id);
+    return this._items.findIndex((item) => item.id === id);
   }
 }
 
