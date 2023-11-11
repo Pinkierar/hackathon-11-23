@@ -1,46 +1,20 @@
-import {
-  AiOutlineArrowUp,
-  AiOutlineArrowRight,
-  AiOutlineArrowDown,
-  AiOutlineArrowLeft,
-} from 'react-icons/ai';
-
-import { BsJoystick } from 'react-icons/bs';
-import { IconType } from 'react-icons';
-import { JSX } from 'react';
+import { listRules } from './rules';
 
 import s from './rules.module.scss';
 
-const listRules: {
-  icon: IconType;
-  desc: JSX.Element;
-}[] = [
-  {
-    icon: BsJoystick,
-    desc: (
-      <>
-        Двигайся к цели, используя клавиши <AiOutlineArrowUp />
-        <AiOutlineArrowRight />
-        <AiOutlineArrowDown />
-        <AiOutlineArrowLeft />
-      </>
-    ),
-  },
-];
-
 export const Rules = () => {
   return (
-    <section>
-      <h2>Добро пожаловать в "Путь счастья"!</h2>
-      <p>
-        В данной игре ты сталкиваешься с увлекательной миссией преодолеть
-        сложный путь, представленный в виде лабиринта, между ребенком,
-        оставшимся без родителями и его будущими приемными родителями!
+    <section className={s.rules}>
+      <h2 className={s.title}>Добро пожаловать!</h2>
+      <p className={s.description}>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam libero
+        veniam aperiam enim laborum ea expedita, voluptas quasi, architecto
+        velit impedit excepturi molestiae, obcaecati temporibus.
       </p>
       <ul className={s.list}>
         {listRules.map((item, i) => (
           <li className={s.list__item} key={i}>
-            <span>{<item.icon />}</span>
+            <span className={s.list__icon}>{<item.icon />}</span>
             <p>{item.desc}</p>
           </li>
         ))}
