@@ -1,4 +1,4 @@
-import { HTMLAttributes, useEffect, useRef, useState } from 'react';
+import { HTMLAttributes, useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Contextual } from '#includes/graphics';
 import P5, { Vector } from 'p5';
@@ -9,6 +9,7 @@ export type Sketch = {
   preload?: () => void;
   setup?: () => void;
   draw?: () => void;
+  windowResized?: () => void;
 };
 
 type P5CanvasPropsMin = {
@@ -24,8 +25,6 @@ const size: Vector = new Vector(1, 1);
 export const P5Canvas = observer<P5CanvasProps>((props) => {
   const { children, sketch, className, ...otherProps } = props;
 
-  const [p, setP] = useState<P5Type | null>(null);
-
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,46 +32,35 @@ export const P5Canvas = observer<P5CanvasProps>((props) => {
     const container = containerRef.current;
 
     const p5 = new P5((p: P5Type) => {
-      const { preload, draw, setup } = sketch ? sketch(p) : ({} as Sketch);
+      const { preload, draw, setup, windowResized } = sketch
+        ? sketch(p)
+        : ({} as Sketch);
 
       p.preload = () => preload && preload();
       p.setup = () => {
         p.createCanvas(size.x, size.y, p.P2D);
         setup && setup();
+        p.windowResized();
       };
       p.draw = () => draw && draw();
+      p.windowResized = () => {
+        const { width, height } = container.getBoundingClientRect();
+        const zoom = window.devicePixelRatio;
+
+        size.set(width, height).mult(zoom);
+        p.resizeCanvas(size.x, size.y);
+
+        windowResized && windowResized();
+      };
 
       Contextual.init(p);
-      setP(p);
     }, container);
 
     return () => {
-      setP(null);
       Contextual.clear();
       p5.remove();
     };
   }, [containerRef.current, sketch]);
-
-  useEffect(() => {
-    const resizeListener = () => {
-      if (!p) return;
-      if (!containerRef.current) return;
-      const container = containerRef.current;
-
-      const { width, height } = container.getBoundingClientRect();
-      const zoom = window.devicePixelRatio;
-
-      size.set(width, height).mult(zoom);
-      p.resizeCanvas(size.x, size.y);
-    };
-
-    window.addEventListener('resize', resizeListener);
-    resizeListener();
-
-    return () => {
-      window.removeEventListener('resize', resizeListener);
-    };
-  }, [p, containerRef]);
 
   return (
     <div
