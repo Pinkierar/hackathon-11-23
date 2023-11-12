@@ -1,7 +1,7 @@
 import { Vector } from 'p5';
 import { Drawable, Shape, Style, VoidShape } from '#includes/graphics';
 
-export class Figure<S extends Shape = VoidShape> extends Drawable {
+export class Entity<S extends Shape = VoidShape> extends Drawable {
   protected shape: S;
 
   protected readonly position: Vector;
@@ -54,8 +54,6 @@ export class Figure<S extends Shape = VoidShape> extends Drawable {
 
   public draw(): void {
     const { p, shape, style } = this;
-
-    if (!style.fill && !style.stroke) return;
 
     p.push();
 

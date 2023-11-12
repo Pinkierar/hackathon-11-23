@@ -1,10 +1,11 @@
 import { Room } from './Room';
 import { Vector } from 'p5';
-import { BoundingBox, Figure, Style, VoidShape } from '#includes/graphics';
+import { BoundingBox, Entity, Style, VoidShape } from '#includes/graphics';
 
-export class Labyrinth extends Figure {
+export class Labyrinth extends Entity {
   private readonly rooms: ReadonlyArray<ReadonlyArray<Room>>;
   private readonly size: Vector = new Vector();
+  private readonly roomSize: Vector = new Vector();
   private readonly segments: Vector = new Vector();
 
   public constructor(size: Vector, segments: Vector, style?: Style) {
@@ -27,10 +28,14 @@ export class Labyrinth extends Figure {
     this.applySize();
   }
 
-  private applySize(): void {
-    const { size, segments } = this;
+  public getSegments(): Vector {
+    return this.segments;
+  }
 
-    const roomSize = size.copy().div(segments);
+  private applySize(): void {
+    const { size, segments, roomSize } = this;
+
+    roomSize.set(size.copy().div(segments));
 
     this.rooms.forEach((row, rowIndex) =>
       row.forEach((room, columnIndex) => {
@@ -47,6 +52,10 @@ export class Labyrinth extends Figure {
 
   public getSize(): Vector {
     return this.size;
+  }
+
+  public getRoomSize(): Vector {
+    return this.roomSize;
   }
 
   public override draw(): void {

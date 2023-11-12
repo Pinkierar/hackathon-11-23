@@ -1,7 +1,7 @@
-import { Figure, RoomShape, Style } from '#includes/graphics';
+import { Entity, RoomShape, Style } from '#includes/graphics';
 import { Vector } from 'p5';
 
-export class Room extends Figure<RoomShape> {
+export class Room extends Entity<RoomShape> {
   public setSize;
   public getSize;
 

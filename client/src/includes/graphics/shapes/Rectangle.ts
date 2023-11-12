@@ -3,14 +3,12 @@ import { Shape } from './Shape';
 import { BoundingBox } from '#includes/graphics';
 
 export class RectangleShape extends Shape {
-  protected readonly size: Vector;
+  protected readonly size: Vector = new Vector();
 
-  public constructor(size: Vector) {
+  public constructor(size?: Vector) {
     super();
 
-    this.size = new Vector();
-
-    this.setSize(size);
+    size && this.setSize(size);
   }
 
   public setSize(size: Vector): void {
