@@ -1,10 +1,14 @@
+@use '@style' as *;
+
 .button {
   cursor: pointer;
 
-  max-width: 22rem;
-  max-height: 5.6rem;
+  margin-top: 1rem;
+  padding: 1rem 3rem;
 
-  background: $button-color;
+  font-size: 1.6rem;
+
+  background: $second-color;
   border-radius: 1rem;
   box-shadow: 0.5rem 1rem 2rem 0 rgb(53 110 173 / 20%);
 
@@ -13,6 +17,6 @@
   }
 
   &:active {
-    transform: translateY(3px);
+    transform: translateY(1px);
   }
 }
