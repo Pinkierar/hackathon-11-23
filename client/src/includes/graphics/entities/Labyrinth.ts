@@ -27,6 +27,10 @@ export class Labyrinth extends Entity {
     this.applySize();
   }
 
+  public getSegments(): Vector {
+    return this.segments;
+  }
+
   private applySize(): void {
     const { size, segments } = this;
 
