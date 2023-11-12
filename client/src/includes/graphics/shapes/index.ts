@@ -5,3 +5,4 @@ export * from './Circle';
 export * from './Rectangle';
 export * from './Polygon';
 export * from './Room';
+export * from './Sprite';

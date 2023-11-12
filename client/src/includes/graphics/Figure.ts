@@ -55,8 +55,6 @@ export class Figure<S extends Shape = VoidShape> extends Drawable {
   public draw(): void {
     const { p, shape, style } = this;
 
-    if (!style.fill && !style.stroke) return;
-
     p.push();
 
     style.fill ? p.fill(style.fill) : p.noFill();
