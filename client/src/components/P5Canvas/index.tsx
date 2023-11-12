@@ -40,7 +40,15 @@ export const P5Canvas = observer<P5CanvasProps>((props) => {
         setup && setup();
         p.windowResized();
       };
-      p.draw = () => draw && draw();
+      let isResizedAfterDraw = false;
+      p.draw = () => {
+        draw && draw();
+
+        if (!isResizedAfterDraw) {
+          p.windowResized();
+          isResizedAfterDraw = true;
+        }
+      };
       p.windowResized = () => {
         const { width, height } = container.getBoundingClientRect();
         const zoom = window.devicePixelRatio;
