@@ -22,6 +22,19 @@ export class Labyrinth extends Entity {
     this.setSize(size);
   }
 
+  public createSolution(): Vector[] {
+    return [];
+  }
+
+  public recreateRooms(): void {
+    const { segments } = this;
+
+    const config = this.createConfig(segments);
+    this.rooms.forEach((row, y) =>
+      row.forEach((room, x) => room.setConfig(config[y][x])),
+    );
+  }
+
   public setSize(size: Vector): void {
     this.size.set(size);
 

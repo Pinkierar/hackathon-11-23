@@ -30,6 +30,10 @@ export const P5Canvas = observer<P5CanvasProps>((props) => {
     const container = containerRef.current;
 
     const p5 = new P5((p: P5Type) => {
+      Contextual.init(p);
+
+      let isResizedAfterDraw = false;
+
       const { preload, draw, setup, windowResized } = sketch
         ? sketch(p)
         : ({} as Sketch);
@@ -38,9 +42,7 @@ export const P5Canvas = observer<P5CanvasProps>((props) => {
       p.setup = () => {
         p.createCanvas(1, 1, p.P2D);
         setup && setup();
-        p.windowResized();
       };
-      let isResizedAfterDraw = false;
       p.draw = () => {
         draw && draw();
 
@@ -57,8 +59,6 @@ export const P5Canvas = observer<P5CanvasProps>((props) => {
 
         windowResized && windowResized();
       };
-
-      Contextual.init(p);
     }, container);
 
     return () => {
