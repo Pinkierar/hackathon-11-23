@@ -6,6 +6,7 @@ import style from './style.module.scss';
 import { cl } from '#includes/cl';
 
 export type Sketch = {
+  preload?: () => void;
   setup?: () => void;
   draw?: () => void;
 };
@@ -32,10 +33,9 @@ export const P5Canvas = observer<P5CanvasProps>((props) => {
     const container = containerRef.current;
 
     const p5 = new P5((p: P5Type) => {
-      const { draw, setup } = sketch
-        ? sketch(p)
-        : ({} as { draw: undefined; setup: undefined });
+      const { preload, draw, setup } = sketch ? sketch(p) : ({} as Sketch);
 
+      p.preload = () => preload && preload();
       p.setup = () => {
         p.createCanvas(size.x, size.y, p.P2D);
         setup && setup();
