@@ -1,0 +1,20 @@
+@use '@style' as *;
+
+.timer {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+
+  &__value {
+    // min-width: 16rem;
+    font-size: 6rem;
+    color: $font-color;
+  }
+
+  &__buttons {
+    button {
+      margin-top: 0;
+    }
+  }
+}

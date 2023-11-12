@@ -4,7 +4,7 @@ import s from './notFound.module.scss';
 export const NotFound = observer(() => {
   return (
     <section>
-      <img className={s.img} src={'assets/404/404.jpg'}></img>
+      <img className={s.img} src={'assets/404/404.jpg'} alt="Not found"></img>
     </section>
   );
 });

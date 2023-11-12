@@ -1,5 +1,4 @@
 @use '@style' as *;
-@use '@style' as *;
 
 .about {
   flex-grow: 1;
@@ -19,4 +18,22 @@
   font-size: 2.4rem;
   font-weight: 400;
   color: $font-color;
+}
+
+.link {
+  text-decoration: underline dotted $main-color;
+}
+
+.stack {
+  margin-top: 1rem;
+
+  &__list {
+    display: flex;
+  }
+
+  &__item {
+    img {
+      width: 20rem;
+    }
+  }
 }
