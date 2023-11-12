@@ -5,6 +5,7 @@ import { BoundingBox, Entity, Style, VoidShape } from '#includes/graphics';
 export class Labyrinth extends Entity {
   private readonly rooms: ReadonlyArray<ReadonlyArray<Room>>;
   private readonly size: Vector = new Vector();
+  private readonly roomSize: Vector = new Vector();
   private readonly segments: Vector = new Vector();
 
   public constructor(size: Vector, segments: Vector, style?: Style) {
@@ -32,9 +33,9 @@ export class Labyrinth extends Entity {
   }
 
   private applySize(): void {
-    const { size, segments } = this;
+    const { size, segments, roomSize } = this;
 
-    const roomSize = size.copy().div(segments);
+    roomSize.set(size.copy().div(segments));
 
     this.rooms.forEach((row, rowIndex) =>
       row.forEach((room, columnIndex) => {
@@ -51,6 +52,10 @@ export class Labyrinth extends Entity {
 
   public getSize(): Vector {
     return this.size;
+  }
+
+  public getRoomSize(): Vector {
+    return this.roomSize;
   }
 
   public override draw(): void {

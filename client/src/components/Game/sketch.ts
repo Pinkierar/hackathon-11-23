@@ -39,10 +39,14 @@ export const sketch = (p: P5Type): Sketch => {
       labyrinth.setStyle({ strokeWidth: scale });
       labyrinth.draw();
 
+      const roomSize = labyrinth.getRoomSize();
+      const roomHalfSize = roomSize.copy().div(2);
+
       const frame = Math.floor(p.millis() / 130) % 4;
+      const animation = Math.floor(p.millis() / 1300) % 7;
       parent.setScale(scale * 0.16);
-      parent.setView([64 * frame, 0, 64, 64]);
-      parent.setPosition(mousePosition);
+      parent.setView([64 * frame, 64 * animation, 64, 64]);
+      parent.setPosition(roomHalfSize.copy().add(labyrinth.getPosition()));
       parent.draw();
 
       p.push();
