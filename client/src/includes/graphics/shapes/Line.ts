@@ -2,7 +2,7 @@ import { Vector } from 'p5';
 import { Shape } from './Shape';
 import { BoundingBox } from '#includes/graphics';
 
-export class Line extends Shape {
+export class LineShape extends Shape {
   protected readonly from: Vector = new Vector();
   protected readonly to: Vector = new Vector();
 
@@ -41,12 +41,8 @@ export class Line extends Shape {
     p.endShape();
   }
 
-  public drawVertices(offset?: Vector): void {
-    const { p } = this;
-
-    offset = offset ?? p.createVector();
-    const from = this.from.copy().add(offset);
-    const to = this.to.copy().add(offset);
+  public drawVertices(): void {
+    const { p, from, to } = this;
 
     p.vertex(from.x, from.y);
     p.vertex(to.x, to.y);

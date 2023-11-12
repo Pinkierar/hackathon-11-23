@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
-import { ViteMinifyPlugin } from 'vite-plugin-minify';
+import {defineConfig} from 'vite';
+import {ViteMinifyPlugin} from 'vite-plugin-minify';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 
@@ -19,5 +19,6 @@ export default defineConfig({
       '@fonts': path.resolve(__dirname, './src/style/fonts'),
       '@style': path.resolve(__dirname, './src/style/style.scss'),
     },
+    extensions: ['.ts', '.tsx'],
   },
 });

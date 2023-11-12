@@ -2,7 +2,7 @@ import { Vector } from 'p5';
 import { Shape } from './Shape';
 import { BoundingBox } from '#includes/graphics';
 
-export class Polygon extends Shape {
+export class PolygonShape extends Shape {
   protected vertices: Vector[];
 
   public constructor(vertices: Vector[]) {
@@ -75,18 +75,19 @@ export class Polygon extends Shape {
     const { p } = this;
 
     p.beginShape(p.TESS);
+
     this.drawVertices();
+
     p.endShape(p.CLOSE);
   }
 
-  public drawVertices(offset?: Vector): void {
+  public drawVertices(): void {
     const { p, vertices } = this;
 
-    offset = offset ?? p.createVector();
-
     for (let i = 0; i < vertices.length; i++) {
-      const { x, y } = vertices[i];
-      p.vertex(x + offset.x, y + offset.y);
+      const vertex = vertices[i];
+
+      p.vertex(vertex.x, vertex.y);
     }
   }
 }
