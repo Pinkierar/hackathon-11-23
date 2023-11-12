@@ -5,7 +5,7 @@ export class Entity<S extends Shape = VoidShape> extends Drawable {
   protected shape: S;
 
   protected readonly position: Vector;
-  private style: Style;
+  protected style: Style;
   private readonly defaultStyle: Readonly<Style>;
 
   public constructor(shape: S, style?: Style) {
