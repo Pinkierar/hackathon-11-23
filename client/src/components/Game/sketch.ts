@@ -12,15 +12,28 @@ import { circleLine } from 'intersects';
 
 type SketchConfig = {
   restartButton: HTMLButtonElement;
+  newButton: HTMLButtonElement;
 };
 
 export const sketch =
   (config: SketchConfig) =>
   (p: P5Type): Sketch => {
-    let labyrinth!: Labyrinth;
+    p.colorMode(p.HSL, 1, 1, 1, 1);
+
+    const labyrinth: Labyrinth = new Labyrinth(
+      p.createVector(),
+      p.createVector(10, 10),
+      {
+        strokeWidth: 2,
+        stroke: p.color(0.8, 0.5, 0.5),
+      },
+    );
+    const parentHitboxShape = new CircleShape(16);
+    const parentHitbox = new Entity<CircleShape>(parentHitboxShape, {
+      strokeWidth: 2,
+      stroke: p.color('red'),
+    });
     let parent!: Parent<CircleShape>;
-    let parentHitboxShape!: CircleShape;
-    let parentHitbox!: Entity<CircleShape>;
 
     const parentSpeed: number = 0.01;
     const padding: Vector = p.createVector(20, 40);
@@ -35,24 +48,24 @@ export const sketch =
         SpriteShape.images.set('parent', p.loadImage('parent.png'));
       },
       setup: () => {
-        p.colorMode(p.HSL, 1, 1, 1, 1);
         p.strokeJoin(p.ROUND);
-
-        labyrinth = new Labyrinth(p.createVector(), p.createVector(10, 10), {
-          strokeWidth: 2,
-          stroke: p.color(0.8, 0.5, 0.5),
-        });
-
-        parentHitboxShape = new CircleShape(16);
-
-        parentHitbox = new Entity<CircleShape>(parentHitboxShape, {
-          strokeWidth: 2,
-          stroke: p.color('red'),
-        });
 
         parent = new Parent(SpriteShape.images.get('parent'), 1, parentHitbox);
 
         config.restartButton.onclick = () => {
+          parent.setPosition(
+            roomSize.copy().div(2).add(labyrinth.getPosition()),
+          );
+          prevMovement.set(0, 1);
+        };
+
+        config.newButton.onclick = () => {
+          labyrinth.recreateRooms();
+
+          p.windowResized();
+          p.draw();
+          p.windowResized();
+
           parent.setPosition(
             roomSize.copy().div(2).add(labyrinth.getPosition()),
           );
@@ -173,7 +186,7 @@ export const sketch =
         labyrinth.setSize(size);
         labyrinth.setStyle({ strokeWidth: scale });
 
-        parent.setPosition(roomSize.copy().div(2).add(labyrinth.getPosition()));
+        parent?.setPosition(roomSize.copy().div(2).add(labyrinth.getPosition()));
       },
     };
   };

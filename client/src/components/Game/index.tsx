@@ -16,17 +16,20 @@ export const Game = observer<GameProps>((props) => {
   const { children, ...otherProps } = props;
 
   const restartButtonRef = useRef<HTMLButtonElement>(null);
+  const newButtonRef = useRef<HTMLButtonElement>(null);
 
   return (
     <div {...otherProps}>
       <div>
         <Button ref={restartButtonRef}>Заново</Button>
+        <Button ref={newButtonRef}>Новая игра</Button>
       </div>
-      {restartButtonRef.current && (
+      {restartButtonRef.current && newButtonRef.current && (
         <P5Canvas
           className={style.canvas}
           sketch={sketch({
             restartButton: restartButtonRef.current,
+            newButton: newButtonRef.current
           })}
         />
       )}
