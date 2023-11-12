@@ -7,19 +7,14 @@
   justify-content: center;
 
   &__value {
-    min-width: 16rem;
+    // min-width: 16rem;
     font-size: 6rem;
     color: $font-color;
   }
 
   &__buttons {
-    display: flex;
-    gap: 1rem;
-
     button {
-      width: 12rem;
       margin-top: 0;
-      text-align: center;
     }
   }
 }

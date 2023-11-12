@@ -23,14 +23,14 @@ export const Header = observer<HeaderProps>(() => {
       </article>
 
       <article className={s.right}>
-        <div className={s.rules}>
+        <Link className={s.rules} to="/rules">
           <AiOutlineRead />
-          <Link to="/rules">Правила</Link>
-        </div>
-        <div className={s.about}>
+          <span>Правила</span>
+        </Link>
+        <Link className={s.about} to="/about">
           <AiOutlineInfoCircle />
-          <Link to="/about">Подробнее</Link>
-        </div>
+          <span>Подробнее</span>
+        </Link>
       </article>
     </header>
   );
