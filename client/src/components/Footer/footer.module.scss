@@ -1,6 +1,8 @@
 @use '@style' as *;
 
 footer {
+  z-index: 20;
+
   padding-block: 1.5rem;
 
   color: $font-color;

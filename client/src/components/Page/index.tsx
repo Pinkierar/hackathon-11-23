@@ -5,7 +5,7 @@ import { Footer } from '#components/Footer';
 import { Rules } from '#components/Rules';
 import { NotFound } from '#components/NotFound';
 import { Home } from '#components/Home';
-// import { GameOver } from '#components/GameOver';
+import { GameOver } from '#components/GameOver';
 import { Notifications } from '#components/Notifications';
 import { Route, Routes } from 'react-router-dom';
 
