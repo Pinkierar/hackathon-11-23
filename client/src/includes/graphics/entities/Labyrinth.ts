@@ -1,8 +1,8 @@
 import { Room } from './Room';
 import { Vector } from 'p5';
-import { BoundingBox, Figure, Style, VoidShape } from '#includes/graphics';
+import { BoundingBox, Entity, Style, VoidShape } from '#includes/graphics';
 
-export class Labyrinth extends Figure {
+export class Labyrinth extends Entity {
   private readonly rooms: ReadonlyArray<ReadonlyArray<Room>>;
   private readonly size: Vector = new Vector();
   private readonly segments: Vector = new Vector();
