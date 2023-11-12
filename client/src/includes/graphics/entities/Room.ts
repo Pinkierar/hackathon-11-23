@@ -2,6 +2,10 @@ import { Entity, RoomShape, Style } from '#includes/graphics';
 import { Vector } from 'p5';
 
 export class Room extends Entity<RoomShape> {
+  private static lastId: number = 0;
+
+  public readonly id: number = Room.lastId++;
+
   public setSize;
   public getSize;
   public setConfig;

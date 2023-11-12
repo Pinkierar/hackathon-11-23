@@ -2,7 +2,7 @@ import {
   CircleShape,
   Entity,
   Labyrinth,
-  Parent,
+  Person,
   SpriteShape,
 } from '#includes/graphics';
 import { Sketch } from '#components/P5Canvas';
@@ -29,13 +29,14 @@ export const sketch =
       },
     );
     const parentHitboxShape = new CircleShape(16);
-    const parentHitbox = new Entity<CircleShape>(parentHitboxShape, {
-      strokeWidth: 2,
-      stroke: p.color('red'),
-    });
-    let parent!: Parent<CircleShape>;
+    const parentHitbox = new Entity<CircleShape>(parentHitboxShape);
+    let parent!: Person<CircleShape>;
 
-    const parentSpeed: number = 0.01;
+    const childHitboxShape = new CircleShape(32);
+    const childHitbox = new Entity<CircleShape>(childHitboxShape);
+    let child!: Person<CircleShape>;
+
+    const parentSpeed: number = 0.1;
     const padding: Vector = p.createVector(20, 40);
     const offset: Vector = p.createVector(10, 30);
 
@@ -43,37 +44,39 @@ export const sketch =
     const roomSize: Vector = p.createVector();
     let scale: number = 1;
 
+    const restart = () => {
+      parent.setPosition(roomSize.copy().div(2).add(labyrinth.getPosition()));
+      prevMovement.set(0, 1);
+    };
+
+    const newGame = () => {
+      labyrinth.recreateRooms();
+
+      p.windowResized();
+      p.draw();
+      p.windowResized();
+
+      parent.setPosition(roomSize.copy().div(2).add(labyrinth.getPosition()));
+      prevMovement.set(0, 1);
+    };
+
     return {
       preload: () => {
         SpriteShape.images.set('parent', p.loadImage('parent.png'));
+        SpriteShape.images.set('child', p.loadImage('child.png'));
       },
       setup: () => {
         p.strokeJoin(p.ROUND);
 
-        parent = new Parent(SpriteShape.images.get('parent'), 1, parentHitbox);
+        parent = new Person(SpriteShape.images.get('parent'), 1, parentHitbox);
+        child = new Person(SpriteShape.images.get('child'), 0.5, childHitbox);
 
-        config.restartButton.onclick = () => {
-          parent.setPosition(
-            roomSize.copy().div(2).add(labyrinth.getPosition()),
-          );
-          prevMovement.set(0, 1);
-        };
+        config.restartButton.onclick = restart;
 
-        config.newButton.onclick = () => {
-          labyrinth.recreateRooms();
-
-          p.windowResized();
-          p.draw();
-          p.windowResized();
-
-          parent.setPosition(
-            roomSize.copy().div(2).add(labyrinth.getPosition()),
-          );
-          prevMovement.set(0, 1);
-        };
+        config.newButton.onclick = newGame;
       },
       draw: () => {
-        const mousePosition = p.createVector(p.mouseX, p.mouseY).sub(offset);
+        // const mousePosition = p.createVector(p.mouseX, p.mouseY).sub(offset);
         const seconds = p.millis() / 1000;
         const deltaTime = p.deltaTime;
 
@@ -166,14 +169,21 @@ export const sketch =
             .add(scale * 0.2, scale * 1.5),
         );
 
+        if (seconds > 5 && childHitbox.isInside(parentHitbox.getPosition())) {
+          alert('Поздравляем, вы достигли счастья!');
+          newGame()
+        }
+
+        // labyrinth.drawForks();
         labyrinth.draw();
+        child.draw();
         parent.draw();
 
-        p.push();
-        p.stroke(p.color('green'));
-        p.strokeWeight(6);
-        p.point(mousePosition);
-        p.pop();
+        // p.push();
+        // p.stroke(p.color('green'));
+        // p.strokeWeight(6);
+        // p.point(mousePosition);
+        // p.pop();
       },
       windowResized: () => {
         const size: Vector = p.createVector(p.width, p.height).sub(padding);
@@ -186,7 +196,18 @@ export const sketch =
         labyrinth.setSize(size);
         labyrinth.setStyle({ strokeWidth: scale });
 
-        parent?.setPosition(roomSize.copy().div(2).add(labyrinth.getPosition()));
+        parent?.setPosition(
+          roomSize.copy().div(2).add(labyrinth.getPosition()),
+        );
+        child?.setPosition(
+          labyrinth.getSize().copy().sub(roomSize.copy().div(2)),
+        );
+        childHitbox.setPosition(
+          child
+            .getPosition()
+            .copy()
+            .add(scale * 0.2, scale * 1.5),
+        );
       },
     };
   };

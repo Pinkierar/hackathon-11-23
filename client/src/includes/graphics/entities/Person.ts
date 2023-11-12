@@ -1,7 +1,7 @@
 import { Entity, Shape, SpriteShape, Style } from '#includes/graphics';
 import { Image, Vector } from 'p5';
 
-export class Parent<S extends Shape> extends Entity<SpriteShape> {
+export class Person<S extends Shape> extends Entity<SpriteShape> {
   public setView;
   public setScale;
   private hitbox: Entity<S>;

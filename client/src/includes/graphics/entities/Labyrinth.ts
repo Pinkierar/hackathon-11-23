@@ -1,6 +1,7 @@
 import { Room } from './Room';
 import { Vector } from 'p5';
 import { BoundingBox, Entity, Style, VoidShape } from '#includes/graphics';
+import { isTruthy } from '#includes/isTruthy.ts';
 
 export class Labyrinth extends Entity {
   private readonly rooms: ReadonlyArray<ReadonlyArray<Room>>;
@@ -22,9 +23,61 @@ export class Labyrinth extends Entity {
     this.setSize(size);
   }
 
-  public createSolution(): Vector[] {
-    return [];
+  public drawForks(): void {
+    const { p, roomSize } = this;
+
+    p.push();
+    p.strokeWeight(10);
+    p.stroke(p.color('red'));
+    p.noFill();
+    p.beginShape(p.POINTS);
+    this.rooms.forEach((row) =>
+      row.forEach((room) => {
+        const isFork = room.getConfig().filter(isTruthy).length < 2;
+        if (!isFork) return;
+
+        const pos = room.getPosition();
+        p.vertex(pos.x + roomSize.x / 2, pos.y + roomSize.y / 2);
+      }),
+    );
+    p.endShape();
+    p.pop();
   }
+
+  // public createSolution(): Vector[] {
+  //   const first = this.rooms[0][0];
+  //   const breadcrumbs: { index: Vector2n; room: Room; directions: Vector4b; isFork: boolean }[] =
+  //     [{index: [0,0], room: first, directions: [...first.getConfig()], isFork: true }];
+  //
+  //   const totalRooms = this.segments.x * this.segments.y;
+  //   const twoTotalRooms = totalRooms * 2;
+  //   let lastForkIndex = 0;
+  //
+  //   for (let i = 0; i < twoTotalRooms; i++) {
+  //     const lastIndex = breadcrumbs.length - 1;
+  //     const last = breadcrumbs[lastIndex];
+  //
+  //     if (last.isFork) {
+  //       const next = last.index
+  //     } else {
+  //
+  //     }
+  //
+  //     const config = last.getConfig();
+  //
+  //     const isFork = config.filter(isTruthy).length < 2;
+  //     if (isFork) {
+  //       breadcrumbs[lastIndex] = {
+  //         room: last,
+  //         directions: config,
+  //       };
+  //     } else {
+  //     }
+  //     breadcrumbs.push();
+  //   }
+  //
+  //   return [];
+  // }
 
   public recreateRooms(): void {
     const { segments } = this;
