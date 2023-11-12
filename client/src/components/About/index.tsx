@@ -1,7 +1,6 @@
 import { stackIcons } from './constants';
 
 import s from './about.module.scss';
-import { link } from 'fs';
 
 export const About = () => {
   return (
