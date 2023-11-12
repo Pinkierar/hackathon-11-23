@@ -13,9 +13,9 @@ export const sketch = (p: P5Type): Sketch => {
       p.colorMode(p.HSL, 1, 1, 1, 1);
       p.strokeJoin(p.ROUND);
 
-      labyrinth = new Labyrinth(p.createVector(), p.createVector(30, 30), {
+      labyrinth = new Labyrinth(p.createVector(), p.createVector(10, 10), {
         strokeWidth: 2,
-        stroke: p.color(0.8, 0.5, 0.5, 0.1),
+        stroke: p.color(0.8, 0.5, 0.5, 1),
       });
 
       parent = new Parent(SpriteShape.images.get('parent'), 1);
@@ -39,7 +39,7 @@ export const sketch = (p: P5Type): Sketch => {
       labyrinth.setStyle({ strokeWidth: scale });
       labyrinth.draw();
 
-      const frame = Math.floor(p.millis() / 100) % 4;
+      const frame = Math.floor(p.millis() / 130) % 4;
       parent.setScale(scale * 0.16);
       parent.setView([64 * frame, 0, 64, 64]);
       parent.setPosition(mousePosition);
