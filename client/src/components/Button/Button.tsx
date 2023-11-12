@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { forwardRef, HTMLAttributes } from 'react';
 import { observer } from 'mobx-react-lite';
 
 import s from './button.module.scss';
@@ -11,11 +11,13 @@ type ButtonProps = Omit<
 > &
   ButtonPropsMin;
 
-export const Button = observer<ButtonProps>((props) => {
-  const { children, ...otherProps } = props;
-  return (
-    <button className={s.button} {...otherProps}>
-      {children}
-    </button>
-  );
-});
+export const Button = observer<ButtonProps, HTMLButtonElement>(
+  forwardRef((props, ref) => {
+    const { children, ...otherProps } = props;
+    return (
+      <button className={s.button} {...otherProps} ref={ref}>
+        {children}
+      </button>
+    );
+  }),
+);

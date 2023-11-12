@@ -6,11 +6,13 @@ export class Keyboard {
   public static startLinting(): void {
     window.addEventListener('keydown', Keyboard.keydownHandler);
     window.addEventListener('keyup', Keyboard.keyupHandler);
+    window.addEventListener('blur', Keyboard.blurHandler);
   }
 
   public static stopLinting(): void {
     window.removeEventListener('keydown', Keyboard.keydownHandler);
     window.removeEventListener('keyup', Keyboard.keyupHandler);
+    window.removeEventListener('blur', Keyboard.blurHandler);
   }
 
   //
@@ -20,11 +22,14 @@ export class Keyboard {
   private static keydownHandler({ code }: KeyboardEvent): void {
     if (Keyboard.pressedKeys.has(code)) return;
 
-    console.log(code);
     Keyboard.pressedKeys.add(code);
   }
 
   private static keyupHandler({ code }: KeyboardEvent): void {
     Keyboard.pressedKeys.delete(code);
+  }
+
+  private static blurHandler(): void {
+    Keyboard.pressedKeys.clear();
   }
 }

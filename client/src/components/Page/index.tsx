@@ -5,7 +5,6 @@ import { Footer } from '#components/Footer';
 import { Rules } from '#components/Rules';
 import { NotFound } from '#components/NotFound';
 import { Home } from '#components/Home';
-import { GameOver } from '#components/GameOver';
 import { Notifications } from '#components/Notifications';
 import { Route, Routes } from 'react-router-dom';
 
@@ -15,7 +14,6 @@ export const Page = observer(() => {
   return (
     <div className={s.content}>
       <Header />
-      {/* <GameOver /> */}
       <Routes>
         <Route path={'/'} element={<Home />} />
         <Route path={'/rules'} element={<Rules />} />

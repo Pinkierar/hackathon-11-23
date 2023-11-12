@@ -22,6 +22,19 @@ export class Labyrinth extends Entity {
     this.setSize(size);
   }
 
+  public createSolution(): Vector[] {
+    return [];
+  }
+
+  public recreateRooms(): void {
+    const { segments } = this;
+
+    const config = this.createConfig(segments);
+    this.rooms.forEach((row, y) =>
+      row.forEach((room, x) => room.setConfig(config[y][x])),
+    );
+  }
+
   public setSize(size: Vector): void {
     this.size.set(size);
 
@@ -30,19 +43,6 @@ export class Labyrinth extends Entity {
 
   public getSegments(): Vector {
     return this.segments;
-  }
-
-  private applySize(): void {
-    const { size, segments, roomSize } = this;
-
-    roomSize.set(size.copy().div(segments));
-
-    this.rooms.forEach((row, rowIndex) =>
-      row.forEach((room, columnIndex) => {
-        room.setSize(roomSize);
-        room.setPosition(rowIndex * roomSize.x, columnIndex * roomSize.y);
-      }),
-    );
   }
 
   public override setStyle(style: Style) {
@@ -58,13 +58,29 @@ export class Labyrinth extends Entity {
     return this.roomSize;
   }
 
-  public override draw(): void {
-    const { p, position } = this;
+  public override setPosition(position: Vector): void;
+  public override setPosition(x: number, y: number): void;
+  public override setPosition(arg1: Vector | number, y?: number): void;
+  public override setPosition(arg1: Vector | number, y?: number): void {
+    super.setPosition(arg1, y);
 
-    p.push();
-    p.translate(position);
+    this.applyPosition();
+  }
+
+  public override draw(): void {
     this.rooms.forEach((row) => row.forEach((room) => room.draw()));
-    p.pop();
+  }
+
+  public getRoomByPosition(position: Vector): Room | null {
+    for (let y = 0; y < this.rooms.length; y++) {
+      for (let x = 0; x < this.rooms[y].length; x++) {
+        const room = this.rooms[y][x];
+
+        if (room.isInside(position)) return room;
+      }
+    }
+
+    return null;
   }
 
   public override isInside(point: Vector): boolean {
@@ -76,6 +92,32 @@ export class Labyrinth extends Entity {
   }
 
   //
+
+  private applyPosition(): void {
+    const { p, rooms, roomSize } = this;
+
+    rooms.forEach((row, rowIndex) =>
+      row.forEach((room, columnIndex) => {
+        const index = p.createVector(rowIndex, columnIndex);
+
+        room.setPosition(index.mult(roomSize));
+      }),
+    );
+  }
+
+  private applySize(): void {
+    const { size, segments, roomSize, rooms } = this;
+
+    roomSize.set(size.copy().div(segments));
+
+    rooms.forEach((row) =>
+      row.forEach((room) => {
+        room.setSize(roomSize);
+      }),
+    );
+
+    this.applyPosition();
+  }
 
   private createConfig(size: Vector): Vector4b[][] {
     const { x: numberOfRows, y: numberOfColumns } = size;
