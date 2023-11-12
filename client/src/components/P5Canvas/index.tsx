@@ -1,7 +1,7 @@
 import { HTMLAttributes, useEffect, useRef } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Contextual } from '#includes/graphics';
-import P5, { Vector } from 'p5';
+import P5 from 'p5';
 import style from './style.module.scss';
 import { cl } from '#includes/cl';
 
@@ -20,8 +20,6 @@ type P5CanvasPropsMin = {
 type P5CanvasProps = Omit<HTMLAttributes<HTMLElement>, keyof P5CanvasPropsMin> &
   P5CanvasPropsMin;
 
-const size: Vector = new Vector(1, 1);
-
 export const P5Canvas = observer<P5CanvasProps>((props) => {
   const { children, sketch, className, ...otherProps } = props;
 
@@ -38,7 +36,7 @@ export const P5Canvas = observer<P5CanvasProps>((props) => {
 
       p.preload = () => preload && preload();
       p.setup = () => {
-        p.createCanvas(size.x, size.y, p.P2D);
+        p.createCanvas(1, 1, p.P2D);
         setup && setup();
         p.windowResized();
       };
@@ -47,8 +45,7 @@ export const P5Canvas = observer<P5CanvasProps>((props) => {
         const { width, height } = container.getBoundingClientRect();
         const zoom = window.devicePixelRatio;
 
-        size.set(width, height).mult(zoom);
-        p.resizeCanvas(size.x, size.y);
+        p.resizeCanvas(width * zoom, height * zoom);
 
         windowResized && windowResized();
       };
