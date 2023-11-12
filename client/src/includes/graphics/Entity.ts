@@ -42,6 +42,14 @@ export class Entity<S extends Shape = VoidShape> extends Drawable {
     return this.position;
   }
 
+  public move(offset: Vector): void;
+  public move(x: number, y: number): void;
+  public move(arg1: Vector | number, y?: number): void;
+  public move(arg1: Vector | number, y?: number): void {
+    if (arg1 instanceof Vector) return void this.position.add(arg1);
+    if (y !== undefined) return void this.position.add(arg1, y);
+  }
+
   public isInside(point: Vector): boolean {
     const local = this.toLocal(point);
 
