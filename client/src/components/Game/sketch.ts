@@ -9,6 +9,7 @@ export const sketch = (p: P5Type): Sketch => {
 
   const parentSpeed = 0.02;
 
+  let prevMovement: Vector = p.createVector(0, 1);
   const roomSize: Vector = p.createVector();
 
   return {
@@ -67,6 +68,12 @@ export const sketch = (p: P5Type): Sketch => {
         else if (movement.y > 0) frameSet = 1;
         else if (movement.y < 0) frameSet = 3;
         frame = Math.floor(seconds * 5.5) % 4;
+        prevMovement = movement;
+      } else {
+        if (prevMovement.x > 0) frameSet = 0;
+        else if (prevMovement.x < 0) frameSet = 2;
+        else if (prevMovement.y > 0) frameSet = 1;
+        else if (prevMovement.y < 0) frameSet = 3;
       }
       parent.setView([64 * frame, 64 * frameSet, 64, 64]);
 
