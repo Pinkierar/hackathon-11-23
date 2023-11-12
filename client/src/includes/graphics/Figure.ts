@@ -1,14 +1,14 @@
 import { Vector } from 'p5';
-import { Drawable, Shape, Style } from '#includes/graphics';
+import { Drawable, Shape, Style, VoidShape } from '#includes/graphics';
 
-export class Figure extends Drawable {
-  private shape: Shape;
+export class Figure<S extends Shape = VoidShape> extends Drawable {
+  protected shape: S;
 
   protected readonly position: Vector;
   private style: Style;
   private readonly defaultStyle: Readonly<Style>;
 
-  public constructor(shape: Shape, style?: Style) {
+  public constructor(shape: S, style?: Style) {
     super();
 
     this.style = style ?? {};
@@ -67,11 +67,5 @@ export class Figure extends Drawable {
     shape.draw();
 
     p.pop();
-  }
-
-  public drawVertices(offset?: Vector): void {
-    const { shape } = this;
-
-    shape.drawVertices(offset);
   }
 }

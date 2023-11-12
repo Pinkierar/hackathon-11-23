@@ -1,65 +1,43 @@
-import { Figure, Cell } from '#includes/graphics';
-import { Labyrinth } from '#includes/Labyrinth';
+import { Labyrinth } from '#includes/graphics';
 import { Sketch } from '#components/P5Canvas';
 
 export const sketch = (p: P5Type): Sketch => {
-  let labyrinth!: Figure[][];
-  const cellSize = p.createVector(70, 70);
-  const labyrinthSize = p.createVector(10, 10);
+  let labyrinth!: Labyrinth;
+  const labyrinthSegments = p.createVector(20, 20);
 
   return {
     setup: () => {
       p.colorMode(p.HSL, 1, 1, 1, 1);
       p.strokeJoin(p.ROUND);
 
-      const { rows } = new Labyrinth(labyrinthSize);
-      labyrinth = rows.map((cells) =>
-        cells.map(
-          (cell) =>
-            new Cell(cellSize, {
-              top: cell[3],
-              right: cell[2],
-              bottom: cell[1],
-              left: cell[0],
-            }),
-        ),
-      );
-
-      const color = p.color(p.random(), 0.5, 0.5, 1);
-      for (let x = 0; x < labyrinth.length; x++) {
-        for (let y = 0; y < labyrinth[x].length; y++) {
-          labyrinth[x][y].setStyle({ strokeWidth: 4, stroke: color });
-          labyrinth[x][y].setPosition(p.createVector(x, y).mult(cellSize));
-        }
-      }
+      labyrinth = new Labyrinth(p.createVector(), labyrinthSegments, {
+        strokeWidth: 2,
+        stroke: p.color(0.8, 0.5, 0.5, 1),
+      });
     },
     draw: () => {
-      const m = p.createVector(p.mouseX, p.mouseY); //.sub(hs);
+      const canvasSize = p.createVector(p.width, p.height);
+      const mousePosition = p.createVector(p.mouseX, p.mouseY);
       p.clear(0, 0, 0, 0);
 
-      p.push();
-      p.strokeWeight(2);
-      p.stroke(p.color('purple'));
-      p.beginShape(p.LINES);
-      for (let x = 0; x < labyrinth.length; x++) {
-        for (let y = 0; y < labyrinth[x].length; y++) {
-          labyrinth[x][y].drawVertices(p.createVector(x, y).mult(cellSize));
-        }
-      }
-      p.endShape();
-      p.pop();
+      const smallestSide = Math.min(canvasSize.x, canvasSize.y);
+      const greatestSegments = Math.max(
+        labyrinthSegments.x,
+        labyrinthSegments.y,
+      );
 
-      // for (let x = 0; x < rows.length; x++) {
-      //   for (let y = 0; y < rows[x].length; y++) {
-      //     rows[x][y].draw();
-      //   }
-      // }
+      const strokeWidth = Math.max(smallestSide / greatestSegments / 10, 2);
+      const twoStrokeWidth = strokeWidth * 2;
 
-      p.push();
-      p.stroke(p.color('green'));
-      p.strokeWeight(4);
-      p.point(m.x, m.y);
-      p.pop();
+      labyrinth.setSize(
+        p.createVector(
+          canvasSize.x - twoStrokeWidth,
+          canvasSize.y - twoStrokeWidth,
+        ),
+      );
+      labyrinth.setPosition(p.createVector(strokeWidth, strokeWidth));
+      labyrinth.setStyle({ strokeWidth });
+      labyrinth.draw();
     },
   };
 };
