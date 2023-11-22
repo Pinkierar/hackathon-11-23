@@ -21,8 +21,8 @@ export const Game = observer<GameProps>((props) => {
   return (
     <div {...otherProps}>
       <div>
-        <Button ref={restartButtonRef}>Заново</Button>
-        <Button ref={newButtonRef}>Новая игра</Button>
+        <Button className={style.restart} ref={restartButtonRef}>Заново</Button>
+        <Button className={style.newGame} ref={newButtonRef}>Новая игра</Button>
       </div>
       {restartButtonRef.current && newButtonRef.current && (
         <P5Canvas

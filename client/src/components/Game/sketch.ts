@@ -36,7 +36,7 @@ export const sketch =
     const childHitbox = new Entity<CircleShape>(childHitboxShape);
     let child!: Person<CircleShape>;
 
-    const parentSpeed: number = 0.1;
+    const parentSpeed: number = 0.02;
     const padding: Vector = p.createVector(20, 40);
     const offset: Vector = p.createVector(10, 30);
 

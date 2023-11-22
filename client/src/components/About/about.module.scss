@@ -21,7 +21,7 @@
 }
 
 .link {
-  text-decoration: underline dotted $main-color;
+  text-decoration: underline dotted rgba(123, 90, 105, 0.53);
 }
 
 .stack {
@@ -29,11 +29,12 @@
 
   &__list {
     display: flex;
+    flex-wrap: wrap;
   }
 
   &__item {
     img {
-      width: 20rem;
+      width: 19rem;
     }
   }
 }
